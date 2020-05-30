@@ -1,10 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import MainLayout from './components/layout/MainLayout/MainLayout';
-
 import Home from './components/views/Home/Home';
 import Trips from './components/views/Trips/TripsContainer';
 // TODO - import other views [DONE]
@@ -14,9 +11,11 @@ import Trip from './components/views/Trip/TripContainer';
 import Regions from './components/views/Regions/RegionsContainer';
 import Info from './components/views/Info/Info';
 import NotFound from './components/views/NotFound/NotFound';
-
 import parseTrips from './utils/parseTrips';
 import {setMultipleStates} from './redux/globalRedux';
+import styles from './App.scss';
+import {spring, AnimatedSwitch} from 'react-router-transition';
+import {BrowserRouter, Route} from 'react-router-dom';
 
 class App extends React.Component {
   static propTypes = {
@@ -38,20 +37,43 @@ class App extends React.Component {
   }
 
   render(){
+    function mapStyles(styles) {
+      return {
+        opacity: styles.opacity,
+        transform: `translateY(${styles.offset}px)`,
+      };
+    }
+    function bounce(val) {
+      return spring(val, {
+        stiffness: 330,
+        damping: 22,
+      });
+    }
+    const bounceTransition = {
+      atEnter: {
+        offset:200,
+      },
+      atLeave: {
+        offset:bounce(0),
+      },
+      atActive: {
+        offset:0,
+      },
+    };
     return (
       <BrowserRouter>
         <MainLayout>
-          <Switch location={location}>
+          <AnimatedSwitch atEnter={{opacity: 0}} atLeave={{opacity: 0}} atActive={{opacity: 1}} className={styles.switchWrapper} location={location}
+            mapStyles={mapStyles} {...bounceTransition}>
             <Route exact path='/' component={Home} />
             <Route exact path='/trips' component={Trips} />
-            {/* TODO - add more routes for other views */}
             <Route exact path='/countries' component={Countries} />
             <Route exact path='/regions' component={Regions} />
             <Route exact path='/country/:id' component={Country} />
             <Route exact path='/trip/:id' component={Trip} />
             <Route exact path='/info' component={Info} />
             <Route path='*' component={NotFound} />
-          </Switch>
+          </AnimatedSwitch>
         </MainLayout>
       </BrowserRouter>
     );
