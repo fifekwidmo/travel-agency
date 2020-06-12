@@ -12,8 +12,7 @@ const OrderOptionIcons = ({values, required, setOptionValue, currentValue}) => (
       value='' onClick={() => setOptionValue('')}>
       <Icon name={'times-circle'}/>
         none
-    </div> : ''(
-    )}
+    </div> : ''}
     {values.map(value => (
       <div 
         className={`${styles.icon} ${currentValue == value.id ? styles.iconActive : ''}`}
