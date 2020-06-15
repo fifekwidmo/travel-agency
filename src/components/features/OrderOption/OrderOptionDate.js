@@ -21,7 +21,7 @@ class OrderOptionDate extends React.Component {
       return (
         <DatePicker
           selected={this.state.startDate}
-          dateFormat="dd/mm/yyyy"
+          dateFormat="yyyy/MM/dd"
           onChange={this.handleChange}
         />
       );
