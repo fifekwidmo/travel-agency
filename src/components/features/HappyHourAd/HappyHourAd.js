@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './HappyHourAd.scss';
 import PropTypes from 'prop-types';
-import Time from 'react-time-format'
+// import Time from 'react-time-format';
+import {formatTime} from '../../../utils/formatTime';
 class HappyHourAd extends React.Component {
     static propTypes = {
       title: PropTypes.string,
@@ -28,12 +29,10 @@ class HappyHourAd extends React.Component {
         <div className={styles.component}>
           <h3 className={styles.title}>{title}</h3>
           {(timeLeft > 23 * 60 * 60) ? 
-            (<div className={styles.promoDescription}><Time format='hh:mm:ss' value={promoDescription}/></div>) :
-            (<div className={styles.promoDescription}><Time format='hh:mm:ss'value={timeLeft}/></div>)}
+            (<div className={styles.promoDescription}>{promoDescription}</div>) :
+            (<div className={styles.promoDescription}>{formatTime(timeLeft)}</div>)}
         </div>
       );
     }
 }
-
-
 export default HappyHourAd;
