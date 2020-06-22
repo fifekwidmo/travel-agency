@@ -46,7 +46,7 @@ const checkDescriptionAtDay = (date, expectedDate) => {
   it(`should show correct at ${date}`, () => {
     global.Date = mockDate(`${date}T00:00:00.000Z`);
     const component = shallow(<DaysToSummer {...mockProps} />);
-    const renderedDays = component.find(select.countdown).text(); //issue?
+    const renderedDays = component.find(select.countdown).text();
     expect(renderedDays).toEqual(expectedDate);
     global.Date = trueDate;
   });
@@ -55,12 +55,13 @@ describe('Component HappyHourAd with mocked Date', () => {
   checkDescriptionAtDay('2020-06-20', '1' + oneDayToStartSummerDescription);
   checkDescriptionAtDay('2020-06-15', '6' + daysToSummerDescription);
   checkDescriptionAtDay('2020-06-01', '20' + daysToSummerDescription);
-  checkDescriptionAtDay('2020-10-30', '255' + daysToSummerDescription);  
-  checkDescriptionAtDay('2020-11-24', '290' + daysToSummerDescription);
+  checkDescriptionAtDay('2020-10-30', '234' + daysToSummerDescription);  
+  checkDescriptionAtDay('2020-11-24', '209' + daysToSummerDescription);
   checkDescriptionAtDay('2020-06-30', mockProps.summerTime);
   checkDescriptionAtDay('2020-07-31', mockProps.summerTime);
   checkDescriptionAtDay('2020-08-01', mockProps.summerTime);
   checkDescriptionAtDay('2020-09-15', mockProps.summerTime);
 });
+
 
 

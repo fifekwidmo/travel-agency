@@ -1,8 +1,6 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './DaysToSummer.scss';
-
 class DaysToSummer extends React.Component {
   static propTypes = {
     title: PropTypes.string,
@@ -10,7 +8,6 @@ class DaysToSummer extends React.Component {
   };
   daysToSummer(){
     const currentTime = new Date();
-    // array -1 in months
     const summerStart = new Date(Date.UTC(currentTime.getUTCFullYear(), 5, 21));
     const summerEnd = new Date(Date.UTC(currentTime.getUTCFullYear(), 8, 22));
     const oneDayToStartSummer = new Date(Date.UTC(currentTime.getUTCFullYear(), 5, 20));
@@ -22,8 +19,10 @@ class DaysToSummer extends React.Component {
     const day = 24 * 60 * 60 * 1000; 
     if (currentTime<summerStart){
       daysDifference = Math.round(Math.abs(currentTime - summerStart)/day) + daysToSummerDescription;
-    }else if (currentTime > summerEnd){
-      daysDifference = Math.round(Math.abs(currentTime - summerStart)/day) + daysToSummerDescription;
+    }else if (currentTime>summerEnd){
+      const nextYear = currentTime.getUTCFullYear() + 1;
+      const nextSummer = new Date(Date.UTC(nextYear, 5, 21));
+      daysDifference = Math.round(Math.abs(nextSummer - currentTime)/day) + daysToSummerDescription;
     }else if(currentTime === oneDayToStartSummer){
       daysDifference = Math.round(Math.abs(currentTime - summerStart)/day) + oneDayToStartSummerDescription;
     }else if(currentTime === oneDayToEndSummer){
@@ -44,4 +43,5 @@ class DaysToSummer extends React.Component {
     );
   }
 }
+
 export default DaysToSummer; 
